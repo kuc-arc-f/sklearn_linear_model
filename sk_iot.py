@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn import linear_model
 import matplotlib.pyplot as plt
-
+import time
 #
 #rdDim = pd.read_csv("sensors_f1.csv" , names=('id', 'temp', 'time'))
 rdDim = pd.read_csv("sensors.csv", names=('id', 'temp', 'time') )
@@ -18,6 +18,9 @@ X = np.array(xDim, dtype = np.float32).reshape(len(xDim ) ,1)
 #print(X[:20] )
 #quit()
 
+print ("start...")
+start_time = time.time()
+
 # 予測モデルを作成
 clf = linear_model.LinearRegression()
 clf.fit(X, Y)
@@ -30,7 +33,10 @@ print(clf.score(X, Y))
 
 #predict
 pred = clf.predict(X)
- 
+
+interval = int(time.time() - start_time)
+print ("実行時間: {}sec".format(interval) )
+
 # plot表示
 plt.plot(Y ,label = "temp")
 plt.plot(pred, label = "predict" )
